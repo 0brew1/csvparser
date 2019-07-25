@@ -1,8 +1,17 @@
-OUTPUT_DIR = build
+CC      = /usr/bin/g++
+CFLAGS = -std=gnu++14
 
-csvparser: parser.o
-	gcc -o build/parser parser.o
-	
-parser.o: parser.cpp parser.hpp
-	gcc -c parcer.cpp
+SRC = src
+BUILD = build
 
+parser: parser.o main.o
+	$(CC) $(CFLAGS) $(BUILD)/*.o -o $(BUILD)/parser.out
+
+parser.o: $(SRC)/parser.cpp $(SRC)/parser.hpp
+	$(CC) $(CFLAGS) -c $(SRC)/parser.cpp -o $(BUILD)/parser.o
+
+main.o: $(SRC)/main.cpp $(SRC)/parser.hpp
+	$(CC) $(CFLAGS) -c $(SRC)/main.cpp -o $(BUILD)/main.o
+
+clean:
+	rm $(BUILD)/*
